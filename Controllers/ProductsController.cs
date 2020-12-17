@@ -25,13 +25,13 @@ namespace WebApplication2.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(400)]
+        [Produces("application/json")]
         public ActionResult<IEnumerable<Product>> Get()
         {
             try
             {
-                return Ok(_repository.GetAllProducts());
+                var result = _repository.GetAllProducts();
+                return Ok(result);
             }
             catch(Exception ex) 
             {

@@ -38,12 +38,12 @@ namespace WebApplication2
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             //services.AddDefaultIdentity<StoreUser>(options => options.SignIn.RequireConfirmedAccount = true)
-              //  .AddEntityFrameworkStores<ApplicationDbContext>();
+            //  .AddEntityFrameworkStores<ApplicationDbContext>();
 
-              services.AddIdentity<StoreUser, IdentityRole>(cfg =>
-              {
-                   cfg.User.RequireUniqueEmail = true;
-               }).AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<StoreUser, IdentityRole>(cfg =>
+            {
+                cfg.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddAuthentication()
                 .AddCookie()
@@ -57,7 +57,7 @@ namespace WebApplication2
                     };
 
                 });
-            
+
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddTransient<IMailService, NullMailService>();
@@ -65,9 +65,11 @@ namespace WebApplication2
             services.AddTransient<UserManager<StoreUser>>();
             // services.AddScoped<Seeder, Seeder>();
             services.AddScoped<IApplicationRepository, ApplicationRepository>();
-            services.AddMvc().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+            services
+                .AddMvcCore(options => options.RespectBrowserAcceptHeader = true)
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            // support for real email
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
