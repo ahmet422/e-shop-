@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication2.Data;
+using Azure.Identity;
 
 namespace WebApplication2
 {
@@ -21,7 +22,8 @@ namespace WebApplication2
 
         }
 
-        private static void SeedDb(IHost host) {
+        private static void SeedDb(IHost host)
+        {
             var scopeFactory = host.Services.GetService<IServiceScopeFactory>();
             using (var scope = scopeFactory.CreateScope())
             {
